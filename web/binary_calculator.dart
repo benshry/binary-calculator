@@ -124,7 +124,14 @@ void backspace(String text) {
 
 /* Parses contents of screen, expects digit, operand, digit. */
 void parse(String text) {
-  text = text.trimLeft();
+  text = text.trim();
+  
+  // if input ends in operator, remove it
+  var operators = ['+', '-', 'x', '÷'];
+  if (operators.contains(text[text.length - 1])) {
+    text = text.substring(0, text.length - 1).trimRight();
+  }
+  
   var parts = text.split(' ');
   calculate(parts[0], parts[1], parts[2]);
 }
