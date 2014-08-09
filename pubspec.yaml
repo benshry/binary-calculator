@@ -1,0 +1,6 @@
+name: binary_calculator
+description: A sample web application
+dependencies:
+  browser: any
+  math: any
+  unittest: any
