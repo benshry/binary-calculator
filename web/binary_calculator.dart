@@ -119,10 +119,10 @@ void calculate(String b_string1, String operator, String b_string2) {
     case '-':
       update_screen(minus(b_string1, b_string2));
       break;
-    case '*':
+    case 'x':
       update_screen(times(b_string1, b_string2));
       break;
-    case '/':
+    case '÷':
       update_screen(divide(b_string1, b_string2));
       break;
     default:
