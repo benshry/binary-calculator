@@ -5,7 +5,7 @@ import 'package:unittest/unittest.dart';
 void main() {
   
   /*
-   * Unit Tests
+   * Unit Tests.
    */
   test('binary_to_decimal tests', () {
     expect(binary_to_decimal('0'), equals(0));
@@ -26,22 +26,34 @@ void main() {
     expect(string_is_binary('10a1'), equals(false));
   });
   
+  test('decimal_to_binary tests', () {
+    expect(decimal_to_binary(0), equals('0'));
+    expect(decimal_to_binary(1), equals('1'));
+    expect(decimal_to_binary(2), equals('10'));
+    expect(decimal_to_binary(3), equals('11'));
+    expect(decimal_to_binary(5), equals('101'));
+    expect(decimal_to_binary(64), equals('1000000'));
+    expect(decimal_to_binary(-0), equals('0'));
+    expect(decimal_to_binary(-1), equals('-1'));
+    expect(decimal_to_binary(-64), equals('-1000000'));
+  });
+  
   /*
-   * Event Handlers
+   * Event Handlers.
    */
   querySelector("#button-equals")
     ..onClick.listen(update);
 }
 
 /*
- * Updates the screen
+ * Updates the screen.
  */
 void update(MouseEvent event) {
   var text = querySelector("#screen").value;
 }
 
 /*
- * Checks if a string is composed of bits
+ * Checks if a string is composed of bits.
  */
 bool string_is_binary(binary_string) {
   if (binary_string.length == 0) {
@@ -56,7 +68,8 @@ bool string_is_binary(binary_string) {
 }
 
 /*
- * Converts a binary string to a decimal integer
+ * Converts a binary string to a decimal integer.
+ * TODO(bshryock): handle negatives?
  */
 int binary_to_decimal(String binary_string) {
   if (!string_is_binary(binary_string)) {
@@ -70,3 +83,33 @@ int binary_to_decimal(String binary_string) {
   }
   return sum.toInt();
 }
+
+/*
+ * Converts a decimal integer to a binary string.
+ * Algorithm from http://goo.gl/2BEwAL
+ */
+String decimal_to_binary(int number) {
+  if (number == 0) {
+    return '0';
+  }
+  
+  var negative = number < 0;
+  if (negative) {
+    number *= -1;
+  }
+  
+  var output = '';
+  while (number > 0) {
+    var bit = number % 2;
+    number = number ~/ 2;
+    output = bit.toString() + output;
+  }
+  
+  if (negative) {
+    output = '-' + output;
+  }
+  
+  return output;
+}
+
+
