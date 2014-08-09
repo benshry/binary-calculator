@@ -101,7 +101,7 @@ void process_key(key, String value) {
         var trimmed = text.trimRight();
         var last = trimmed[trimmed.length - 1];
         if (operators.contains(last)) {
-          break;
+          text = trimmed.substring(0, trimmed.length - 1).trimRight();
         }
 
       }
