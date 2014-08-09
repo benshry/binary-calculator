@@ -63,16 +63,107 @@ void main() {
   
   /*
    * Event Handlers.
-   */
+   */  
+  querySelector("#button-zero")
+      ..onClick.listen(add_zero);
+  
+  querySelector("#button-one")
+      ..onClick.listen(add_one);
+  
+  querySelector("#button-plus")
+      ..onClick.listen(add_plus);
+  
+  querySelector("#button-minus")
+      ..onClick.listen(add_minus);
+  
+  querySelector("#button-times")
+      ..onClick.listen(add_times);
+  
+  querySelector("#button-divide")
+      ..onClick.listen(add_divide);
+  
+  querySelector("#button-backspace")
+        ..onClick.listen(backspace);
+  
+  querySelector("#button-clear")
+        ..onClick.listen(clear);
+  
   querySelector("#button-equals")
-    ..onClick.listen(update);
+    ..onClick.listen(parse);
 }
 
-/*
- * Updates the screen.
- */
-void update(MouseEvent event) {
-  var text = querySelector("#screen").value;
+void add_zero(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + '0');
+}
+
+void add_one(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + '1');
+}
+
+void add_plus(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + ' + ');
+}
+
+void add_minus(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + ' - ');
+}
+
+void add_times(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + ' * ');
+}
+
+void add_divide(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  update_screen(text + ' / ');
+}
+
+void backspace(MouseEvent event) {
+  String text = querySelector("#screen").text;
+  text = text.trimRight();
+  text = text.substring(0, text.length - 1);
+  text = text.trimRight();
+  update_screen(text);
+}
+
+void clear(MouseEvent event) {
+  update_screen('');
+}
+
+/* Parses contents of screen, expects digit, operand, digit. */
+void parse(MouseEvent event) {
+  String text = querySelector("#screen").text.trimLeft();
+  var parts = text.split(' ');
+  calculate(parts[0], parts[1], parts[2]);
+}
+
+/* Uses appropriate operator to combine two binary strings, then updates. */
+void calculate(String b_string1, String operator, String b_string2) {
+  switch (operator) {
+    case '+':
+      update_screen(plus(b_string1, b_string2));
+      break;
+    case '-':
+      update_screen(minus(b_string1, b_string2));
+      break;
+    case '*':
+      update_screen(times(b_string1, b_string2));
+      break;
+    case '/':
+      update_screen(divide(b_string1, b_string2));
+      break;
+    default:
+      throw new StateError('Operator must be +, -, *, or /.');
+  }
+}
+
+/* Replaces contents of screen with text argument. */
+void update_screen(String text) {
+  querySelector("#screen").text = text;
 }
 
 /*
