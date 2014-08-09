@@ -62,81 +62,50 @@ void main() {
   });
   
   /*
-   * Event Handlers.
-   */  
-  querySelector("#button-zero")
-      ..onClick.listen(add_zero);
-  
-  querySelector("#button-one")
-      ..onClick.listen(add_one);
-  
-  querySelector("#button-plus")
-      ..onClick.listen(add_plus);
-  
-  querySelector("#button-minus")
-      ..onClick.listen(add_minus);
-  
-  querySelector("#button-times")
-      ..onClick.listen(add_times);
-  
-  querySelector("#button-divide")
-      ..onClick.listen(add_divide);
-  
-  querySelector("#button-backspace")
-        ..onClick.listen(backspace);
-  
-  querySelector("#button-clear")
-        ..onClick.listen(clear);
-  
-  querySelector("#button-equals")
-    ..onClick.listen(parse);
+   * Add listeners to each key.
+   */
+  var keys = document.querySelectorAll('#calculator .key');
+  for(var i = 0; i < keys.length; i++) {
+    keys[i]..onClick.listen((event) => process_key(event, keys[i].text));
+  }
+
 }
 
-void add_zero(MouseEvent event) {
+/* Event handler for all keys. */
+void process_key(key, String value) {
+  var operators = ['+', '-', 'x', '÷'];
   String text = querySelector("#screen").text;
-  update_screen(text + '0');
+  
+  switch (value) {
+    case 'C':
+      update_screen('');
+      break;
+    case 'b':
+      backspace(text);
+      break;
+    case '=':
+      parse(text);
+      break;
+    default:
+      if (operators.contains(value)) {
+        value = ' ' + value + ' ';
+      }
+      update_screen(text + value);
+      break;
+  }
 }
 
-void add_one(MouseEvent event) {
-  String text = querySelector("#screen").text;
-  update_screen(text + '1');
-}
-
-void add_plus(MouseEvent event) {
-  String text = querySelector("#screen").text;
-  update_screen(text + ' + ');
-}
-
-void add_minus(MouseEvent event) {
-  String text = querySelector("#screen").text;
-  update_screen(text + ' - ');
-}
-
-void add_times(MouseEvent event) {
-  String text = querySelector("#screen").text;
-  update_screen(text + ' * ');
-}
-
-void add_divide(MouseEvent event) {
-  String text = querySelector("#screen").text;
-  update_screen(text + ' / ');
-}
-
-void backspace(MouseEvent event) {
-  String text = querySelector("#screen").text;
+/* Removes the last character from a string and updates the screen. */
+void backspace(String text) {
   text = text.trimRight();
   text = text.substring(0, text.length - 1);
   text = text.trimRight();
   update_screen(text);
 }
 
-void clear(MouseEvent event) {
-  update_screen('');
-}
-
 /* Parses contents of screen, expects digit, operand, digit. */
-void parse(MouseEvent event) {
-  String text = querySelector("#screen").text.trimLeft();
+void parse(String text) {
+  text = text.trimLeft();
   var parts = text.split(' ');
   calculate(parts[0], parts[1], parts[2]);
 }
