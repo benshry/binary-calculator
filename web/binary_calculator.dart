@@ -87,7 +87,20 @@ void process_key(key, String value) {
       parse(text);
       break;
     default:
-      if (operators.contains(value)) {
+      // TODO(bshryock): "add" function with unit tests
+      var current_is_operator = operators.contains(value);
+      
+      if(current_is_operator) {
+        
+        // disallow two operators in a row
+        var trimmed = text.trimRight();
+        var last = trimmed[trimmed.length - 1];
+        if (operators.contains(last)) {
+          break;
+        }
+      }
+      
+      if (current_is_operator) {
         value = ' ' + value + ' ';
       }
       update_screen(text + value);
@@ -126,7 +139,7 @@ void calculate(String b_string1, String operator, String b_string2) {
       update_screen(divide(b_string1, b_string2));
       break;
     default:
-      throw new StateError('Operator must be +, -, *, or /.');
+      throw new StateError('Operator must be +, -, x, or ÷.');
   }
 }
 
