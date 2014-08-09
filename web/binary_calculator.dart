@@ -90,7 +90,12 @@ void process_key(key, String value) {
       // TODO(bshryock): "add" function with unit tests
       var current_is_operator = operators.contains(value);
       
-      if(current_is_operator) {
+      // disallow starting with operator
+      // TODO(bshryock): handle negatives
+      if (current_is_operator) {
+        if (text == '') {
+          break;
+        }
         
         // disallow two operators in a row
         var trimmed = text.trimRight();
@@ -98,6 +103,7 @@ void process_key(key, String value) {
         if (operators.contains(last)) {
           break;
         }
+
       }
       
       if (current_is_operator) {
