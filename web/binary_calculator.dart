@@ -38,6 +38,29 @@ void main() {
     expect(decimal_to_binary(-64), equals('-1000000'));
   });
   
+  test('plus tests', () {
+    expect(plus('1', '1'), equals('10'));
+  });
+  
+  test('minus tests', () {
+    expect(minus('1', '1'), equals('0'));
+    expect(minus('1', '10'), equals('-1'));
+  });
+  
+  test('times tests', () {
+    expect(times('1', '0'), equals('0'));
+    expect(times('1', '1'), equals('1'));
+    expect(times('1', '10'), equals('10'));
+    expect(times('10', '10'), equals('100'));
+  });
+  
+  test('divide tests', () {
+    expect(()=>divide('1', '0'), throwsStateError);
+    expect(divide('1', '1'), equals('1'));
+    expect(divide('100', '10'), equals('10'));
+    expect(divide('101', '10'), equals('10'));
+  });
+  
   /*
    * Event Handlers.
    */
@@ -73,7 +96,7 @@ bool string_is_binary(binary_string) {
  */
 int binary_to_decimal(String binary_string) {
   if (!string_is_binary(binary_string)) {
-    throw new StateError('Binary string contains invalid characters');
+    throw new StateError('Binary string contains invalid characters.');
   }
   var multiplier = pow(2, binary_string.length - 1);
   var sum = 0;
@@ -112,4 +135,38 @@ String decimal_to_binary(int number) {
   return output;
 }
 
+/*
+ * Adds two binary strings together.
+ */
+String plus(b_string1, b_string2) {
+  int dec_result = binary_to_decimal(b_string1) + binary_to_decimal(b_string2);
+  return decimal_to_binary(dec_result);
+}
 
+/*
+ * Subtracts two binary strings.
+ */
+String minus(b_string1, b_string2) {
+  int dec_result = binary_to_decimal(b_string1) - binary_to_decimal(b_string2);
+  return decimal_to_binary(dec_result);
+}  
+  
+/*
+ * Multiplies two binary strings.
+ */
+String times(b_string1, b_string2) {
+  int dec_result = binary_to_decimal(b_string1) * binary_to_decimal(b_string2);
+  return decimal_to_binary(dec_result);
+}
+
+/*
+ * Divides two binary strings.
+ * Note: performs integer division.
+ */
+String divide(b_string1, b_string2) {
+  if (b_string2 == '0') {
+    throw new StateError('Can not divide by 0.');
+  }
+  int dec_result = binary_to_decimal(b_string1) ~/ binary_to_decimal(b_string2);
+  return decimal_to_binary(dec_result);
+}
