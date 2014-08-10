@@ -6,7 +6,7 @@ void main() {
   /*
    * TODO(bshryock):
    * - P3: accept keyboard input
-   * - P0: robust parsing
+   * - P1: handle more than two numbers
    */
   
   /*
@@ -91,7 +91,13 @@ void process_key(key, String value) {
       backspace(text);
       break;
     case '=':
-      parse(text);
+      try {
+        var parts = parse(text);
+        calculate(parts[0], parts[1], parts[2]);
+      } catch (exception) {
+        print(exception);
+      }
+      
       break;
     default:
       // TODO(bshryock): "add" function with unit tests
@@ -139,9 +145,7 @@ void backspace(String text) {
 }
 
 /* Parses contents of screen, expects digit, operand, digit. */
-// TODO(bshryock): Handle more than two operands
-// TODO(bshryock): Handle fewer than two operands
-void parse(String text) {
+List parse(String text) {
   text = text.trim();
   
   // if input ends in operator, remove it
@@ -151,7 +155,11 @@ void parse(String text) {
   }
   
   var parts = text.split(' ');
-  calculate(parts[0], parts[1], parts[2]);
+  if (parts.length != 3) {
+    update_screen('');
+    throw new StateError('Only two numbers are supported.');
+  }
+  return parts;
 }
 
 /* Uses appropriate operator to combine two binary strings, then updates. */
