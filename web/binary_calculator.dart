@@ -3,6 +3,12 @@ import 'dart:math';
 import 'package:unittest/unittest.dart';
 
 void main() {
+  /*
+   * TODO(bshryock):
+   * - P3: accept keyboard input
+   * - P0: handle negatives
+   * - P0: robust parsing
+   */
   
   /*
    * Unit Tests.
@@ -116,13 +122,17 @@ void process_key(key, String value) {
 
 /* Removes the last character from a string and updates the screen. */
 void backspace(String text) {
-  text = text.trimRight();
-  text = text.substring(0, text.length - 1);
-  text = text.trimRight();
-  update_screen(text);
+  if (text.length > 0) {
+    text = text.trimRight();
+    text = text.substring(0, text.length - 1);
+    text = text.trimRight();
+    update_screen(text);
+  }
 }
 
 /* Parses contents of screen, expects digit, operand, digit. */
+// TODO(bshryock): Handle more than two operands
+// TODO(bshryock): Handle fewer than two operands
 void parse(String text) {
   text = text.trim();
   
