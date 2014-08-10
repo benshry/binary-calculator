@@ -6,7 +6,6 @@ void main() {
   /*
    * TODO(bshryock):
    * - P3: accept keyboard input
-   * - P0: handle negatives
    * - P0: robust parsing
    */
   
@@ -20,6 +19,8 @@ void main() {
     expect(binary_to_decimal('11'), equals(3));
     expect(binary_to_decimal('0011'), equals(3)); // leading zeros
     expect(binary_to_decimal('0000'), equals(0)); // all zeros
+    expect(binary_to_decimal('-1'), equals(-1));
+    expect(binary_to_decimal('-1000000'), equals(-64));
   });
   
   test('is_binary_string tests', () {
@@ -97,9 +98,11 @@ void process_key(key, String value) {
       var current_is_operator = operators.contains(value);
       
       // disallow starting with operator
-      // TODO(bshryock): handle negatives
       if (current_is_operator) {
         if (text == '') {
+          if (value == '-') {
+            update_screen('-');
+          }
           break;
         }
         
@@ -107,6 +110,11 @@ void process_key(key, String value) {
         var trimmed = text.trimRight();
         var last = trimmed[trimmed.length - 1];
         if (operators.contains(last)) {
+          
+          // if only character is '-', don't swap 
+          if (trimmed.length == 1) {
+            break;
+          }
           text = trimmed.substring(0, trimmed.length - 1).trimRight();
         }
 
@@ -188,9 +196,13 @@ bool string_is_binary(binary_string) {
 
 /*
  * Converts a binary string to a decimal integer.
- * TODO(bshryock): handle negatives?
  */
 int binary_to_decimal(String binary_string) {
+  var sign = 1;
+  if (binary_string[0] == '-') {
+    binary_string = binary_string.substring(1);
+    sign = -1;
+  }
   if (!string_is_binary(binary_string)) {
     throw new StateError('Binary string contains invalid characters.');
   }
@@ -200,7 +212,7 @@ int binary_to_decimal(String binary_string) {
     sum = sum + (multiplier * int.parse(binary_string[i]));
     multiplier /= 2;
   }
-  return sum.toInt();
+  return sum.toInt() * sign;
 }
 
 /*
