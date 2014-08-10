@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Binary calculator</title>
+    <title>Binary Calculator</title>
     
     <script async type="application/dart" src="binary_calculator.dart"></script>
     <script async src="packages/browser/dart.js"></script>
@@ -12,22 +12,21 @@
     <link rel="stylesheet" href="binary_calculator.css">
   </head>
   <body>
-    <h1>Binary calculator</h1>
     
     <div id="calculator">
-      <div class="top">
-        <button type="button" class="key">C</button>      
+      <div id="top">
+        <span id="clear" class="key">C</span>      
         <div id="screen"></div>
       </div>
       <div class="keys">
-        <button type="button" class="key">0</button>
-        <button type="button" class="key">1</button>
-        <button type="button" class="key">+</button>
-        <button type="button" class="key">-</button>
-        <button type="button" class="key">x</button>
-        <button type="button" class="key">÷</button>
-        <button type="button" class="key">b</button>
-        <button type="button" class="key">=</button>
+        <span class="key">+</span>
+        <span class="key">-</span>
+        <span class="key">x</span>
+        <span class="key">÷</span>
+        <span class="key">0</span>
+        <span class="key">1</span>
+        <span class="key">b</span>
+        <span id="equals" class="key">=</span>
       </div>
     </div>
   </body>

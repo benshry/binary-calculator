@@ -1,18 +1,99 @@
-
-body {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin: 15px;
+html, body {
+  font: 600 14px Helvetica Neue, Helvetica, sans-serif;
 }
 
-h1, p {
-  color: #333;
+#calculator {
+	width: 325px;
+	margin: 90px auto;
+	padding: 20px 16px 10px;
+	border-radius: 4px;
+	background: linear-gradient(#E9E7E7, #E1DEDE);
+	box-shadow: 0px 3px #C1BEBE, 0px 10px 15px rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
 }
 
-#screen {
-  height: 100px;
-  border: thin solid black;
+#top #clear {
+	float: left;
+}
+
+#top #screen {
+	width: 212px;
+	height: 40px;
+	float: right;
+	margin-right: 8px;
+	padding: 0 10px;
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0px 3px rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
+	border-radius: 3px;
+	font-size: 18px;
+	line-height: 40px;
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+	text-align: right;
+	letter-spacing: 1px;
+}
+
+.keys, #top {
+  overflow: hidden;
+}
+
+#top .key, .keys .key {
+	width: 66px;
+	height: 36px;
+	float: left;
+	position: relative;
+	top: 0;
+	margin: 0 7px 11px 0;
+	background: white;
+	box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
+	border-radius: 3px;
+	color: #777;
+	line-height: 36px;
+	text-align: center;
+	user-select: none;
+	transition: all 0.1s ease;
+	cursor: pointer;
+}
+
+.keys .key:hover {
+	background: #EFEFEF;
+	box-shadow: 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.keys .key:active {
+	box-shadow: 0px 0px;
+	top: 3px;
+}
+
+.keys #equals {
+	background: #E9FF84;
+	box-shadow: 0px 3px #9BA651;
+}
+
+.keys #equals:hover {
+    background: #D1FA6B;
+	box-shadow: 0px 3px #79823B;
+}
+
+.keys #equals:active {
+	box-shadow: 0px 0px #707932;
+	top: 3px;
+}
+
+#top #clear {
+	background: #FF8F98;
+	box-shadow: 0px 3px #FF6C77;
+	color: white;
+}
+
+#top #clear:hover {
+	background: #F67981;
+	box-shadow: 0px 3px #D3444D;
+}
+
+#top #clear:active {
+	top: 3px;
+	box-shadow: 0px 0px #D3545D;
 }
